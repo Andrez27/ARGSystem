@@ -52,17 +52,11 @@ public class VentanaPrincipal extends JFrame implements KeyEventDispatcher {
 	public static JLabel lblNombre, lblRuc, lblTelefono, lblEmail;
 
 	public VentanaPrincipal() {
+		setTitle("ARG System - Sistema de Gestion de Pedidos V1.8");// Se asigna el nombre de la ventana
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setExtendedState(MAXIMIZED_BOTH);
-//		this.setPreferredSize(new Dimension(1366, 768));
-		// setResizable(false);
-		// setMaximumSize(new Dimension(1366, 768));
 		this.setMinimumSize(new Dimension(800, 600));
-		// setBounds(100, 100, 1366, 768);
-
-		// setBounds(100, 100, 1600, 800);
 		setLocationRelativeTo(this);// centra la ventana
-		setTitle("ARG System - Sistema de Gestion de Pedidos V1.8");// Se asigna el nombre de la ventana
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
