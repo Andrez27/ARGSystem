@@ -84,7 +84,7 @@ public class ArgSystem_Michel extends JFrame {
 		lblVersion.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		lblVersion.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblVersion.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblVersion.setForeground(Color.DARK_GRAY);
+		lblVersion.setForeground(Color.WHITE);
 		contentPane.add(lblVersion);
 	}
 	

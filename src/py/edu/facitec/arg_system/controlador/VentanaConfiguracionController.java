@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.text.JTextComponent;
 
 import py.edu.facitec.arg_system.aaa.VentanaPrincipal;
 import py.edu.facitec.arg_system.abm.VentanaConfiguracion;
@@ -18,7 +17,7 @@ import py.edu.facitec.arg_system.entidad.Configuracion;
 @SuppressWarnings("serial")
 public class VentanaConfiguracionController extends JDialog {
 
-	private JTextComponent tfNombre, tfRuc, tfTelefono, tfEmail;
+	// private JTextComponent tfNombre, tfRuc, tfTelefono, tfEmail;
 	private VentanaConfiguracion ventanaConfiguracion;
 	private Configuracion configuracion;
 	private ConfiguracionDao dao;
@@ -95,8 +94,9 @@ public class VentanaConfiguracionController extends JDialog {
 				} else {
 					ventanaConfiguracion.getLblAvisoTelefono().setVisible(false);
 				}
-				if (ventanaConfiguracion.getTfTelefono().getText().length() == 50) { // PARA VALIDAR LA CANTIDAD DE DATOS A
-																				// ESCRIBIR
+				if (ventanaConfiguracion.getTfTelefono().getText().length() == 50) { // PARA VALIDAR LA CANTIDAD DE
+																						// DATOS A
+					// ESCRIBIR
 					e.consume();
 					ventanaConfiguracion.getLblAvisoTelefono().setText("*No permitido más caracteres");
 					ventanaConfiguracion.getLblAvisoTelefono().setVisible(true);
@@ -116,8 +116,9 @@ public class VentanaConfiguracionController extends JDialog {
 		ventanaConfiguracion.getTfDireccion().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (ventanaConfiguracion.getTfDireccion().getText().length() == 100) { // PARA VALIDAR LA CANTIDAD DE DATOS A
-																					// ESCRIBIR
+				if (ventanaConfiguracion.getTfDireccion().getText().length() == 100) { // PARA VALIDAR LA CANTIDAD DE
+																						// DATOS A
+																						// ESCRIBIR
 					e.consume();
 					ventanaConfiguracion.getLblAvisoDireccion().setText("* No permitido más datos");
 					ventanaConfiguracion.getLblAvisoDireccion().setVisible(true);
@@ -147,7 +148,7 @@ public class VentanaConfiguracionController extends JDialog {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (ventanaConfiguracion.getTfEmail().getText().length() == 50) { // PARA VALIDAR LA CANTIDAD DE DATOS A
-																			// ESCRIBIR
+					// ESCRIBIR
 					e.consume();
 					ventanaConfiguracion.getLblAvisoEmail().setText("* No permitido más datos");
 					ventanaConfiguracion.getLblAvisoEmail().setVisible(true);
@@ -179,21 +180,22 @@ public class VentanaConfiguracionController extends JDialog {
 		}
 
 		configuracion = new Configuracion();
-		configuracion.setId(1);
+//		configuracion.setId(1);
 		configuracion.setEmpresa(ventanaConfiguracion.getTfEmpresa().getText());
 		configuracion.setRuc(ventanaConfiguracion.getTfRuc().getText());
 		configuracion.setTelefono(ventanaConfiguracion.getTfTelefono().getText());
+		configuracion.setDireccion(ventanaConfiguracion.getTfDireccion().getText());
 		configuracion.setEmail(ventanaConfiguracion.getTfEmail().getText());
 
 		dao = new ConfiguracionDao();
 		dao.insertarOModificar(configuracion);
-		
+
 		try {
 			dao.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			dao.rollback();
-			JOptionPane.showMessageDialog(null, "Se produjo un error al inicializar!!!");
+			JOptionPane.showMessageDialog(null, "Se produjo un error al actualizar datos!!!");
 		}
 
 		actualizarConfiguracion();
@@ -207,14 +209,14 @@ public class VentanaConfiguracionController extends JDialog {
 		ocultarLabels();
 	}
 
-//	private void cargarDatos() {
-//		configuracion = new Configuracion();
-//		configuracion.setId(1);
-//		configuracion.setEmpresa(tfNombre.getText());
-//		configuracion.setRuc(tfRuc.getText());
-//		configuracion.setTelefono(tfTelefono.getText());
-//		configuracion.setEmail(tfEmail.getText());
-//	}
+	// private void cargarDatos() {
+	// configuracion = new Configuracion();
+	// configuracion.setId(1);
+	// configuracion.setEmpresa(tfNombre.getText());
+	// configuracion.setRuc(tfRuc.getText());
+	// configuracion.setTelefono(tfTelefono.getText());
+	// configuracion.setEmail(tfEmail.getText());
+	// }
 
 	private void actualizarConfiguracion() {
 		dao = new ConfiguracionDao();
@@ -222,6 +224,7 @@ public class VentanaConfiguracionController extends JDialog {
 		VentanaPrincipal.lblNombre.setText(configuracion.getEmpresa());
 		VentanaPrincipal.lblRuc.setText(configuracion.getRuc());
 		VentanaPrincipal.lblTelefono.setText(configuracion.getTelefono());
+//		VentanaPrincipal.lblDireccion.setText(configuracion.getTelefono());
 		VentanaPrincipal.lblEmail.setText(configuracion.getEmail());
 	}
 
@@ -230,13 +233,13 @@ public class VentanaConfiguracionController extends JDialog {
 		configuraciones = dao.recuperarTodo();
 		if (configuraciones.size() == 0)
 			return;
-		tfNombre.setText(configuraciones.get(0).getEmpresa());
-		tfRuc.setText(configuraciones.get(0).getRuc());
-		tfTelefono.setText(configuraciones.get(0).getTelefono());
-		tfEmail.setText(configuraciones.get(0).getEmail());
+		ventanaConfiguracion.getTfEmpresa().setText(configuraciones.get(0).getEmpresa());
+		ventanaConfiguracion.getTfRuc().setText(configuraciones.get(0).getRuc());
+		ventanaConfiguracion.getTfTelefono().setText(configuraciones.get(0).getTelefono());
+		ventanaConfiguracion.getTfEmail().setText(configuraciones.get(0).getEmail());
 	}
 
-// ---------------------------------VALIDACION DE
+	// ---------------------------------VALIDACION DE
 	// CAMPOS-----------------------------------
 
 	private boolean validarCampos() {
@@ -247,20 +250,7 @@ public class VentanaConfiguracionController extends JDialog {
 
 			return false;
 		}
-		if (ventanaConfiguracion.getTfDireccion().getText().isEmpty()) {
-			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
-			ventanaConfiguracion.getLblAvisoDireccion().setVisible(true);
-			ventanaConfiguracion.getTfDireccion().requestFocus();
-
-			return false;
-		}
-		if (ventanaConfiguracion.getTfEmail().getText().isEmpty()) {
-			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
-			ventanaConfiguracion.getLblAvisoEmail().setVisible(true);
-			ventanaConfiguracion.getTfEmail().requestFocus();
-
-			return false;
-		}
+		
 		if (ventanaConfiguracion.getTfRuc().getText().isEmpty()) {
 			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
 			ventanaConfiguracion.getLblAvisoRuc().setVisible(true);
@@ -268,6 +258,7 @@ public class VentanaConfiguracionController extends JDialog {
 
 			return false;
 		}
+		
 		if (ventanaConfiguracion.getTfTelefono().getText().isEmpty()) {
 			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
 			ventanaConfiguracion.getLblAvisoTelefono().setVisible(true);
@@ -275,6 +266,23 @@ public class VentanaConfiguracionController extends JDialog {
 
 			return false;
 		}
+		
+		if (ventanaConfiguracion.getTfDireccion().getText().isEmpty()) {
+			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
+			ventanaConfiguracion.getLblAvisoDireccion().setVisible(true);
+			ventanaConfiguracion.getTfDireccion().requestFocus();
+
+			return false;
+		}
+		
+		if (ventanaConfiguracion.getTfEmail().getText().isEmpty()) {
+			ventanaConfiguracion.getLblAvisoEmpresa().setText("* Campo Obligatorio!!");
+			ventanaConfiguracion.getLblAvisoEmail().setVisible(true);
+			ventanaConfiguracion.getTfEmail().requestFocus();
+
+			return false;
+		}
+		
 		return true;
 	}
 
